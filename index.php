@@ -14,11 +14,7 @@
 			<div class="container">
 				
 				<!-- EN-TETE -->
-				<header>
-                    <a href="./">
-                        <img src="assets/logo.png" alt="logo" id="logo">
-                    </a>
-				</header>
+				<?php require_once('src/header.php'); ?>
 
 				<!-- PROPOSITION -->
 				<h1>Une url longue ? Raccourcissez-là ?</h1>
@@ -68,11 +64,7 @@
 		</section>
 
 		<!-- PIED DE PAGE -->
-		<footer>
-            <img src="assets/logo2.png" alt="logo" id="logo"><br>
-            2300 © Bitly<br>
-            <a href="#">Contact</a> - <a href="#">À propos</a>
-        </footer>
+		<?php require_once('src/footer.php'); ?>
         
     </body>
 </html>
