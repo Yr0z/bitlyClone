@@ -1,5 +1,36 @@
 <?php
 
+	if(!empty($_GET['q'])) {
+
+		//  Variable
+		$shortcut = htmlspecialchars($_GET['q']);
+
+		// Existe-t-il ?
+		$bdd = new PDO('mysql:host=localhost;dbname=bitly;charset=utf8', 'root', '');
+		$requete = $bdd->prepare ('SELECT COUNT(*) AS nombre FROM links WHERE shortcut = ?');
+		$requete->execute([$shortcut]);
+
+		while($resultat = $requete->fetch()) {
+			
+			if($resultat['nombre'] != 1) {
+				header('location: ./?error=true&message=Adresse url non connue');
+				exit();
+			}
+		}
+
+		// Redirection
+		$requete = $bdd->prepare('SELECT * FROM links WHERE shortcut = ?');
+		$requete->execute([$shortcut]);
+
+		while($resultat = $requete->fetch()) {
+			
+			header('location: '.$resultat['url']);
+			exit();
+
+		}
+
+	}
+
 	if(!empty($_POST['url'])) {
 		
 		// * Etape 1 	- Variable
@@ -18,17 +49,17 @@
 
 		// * Etape 4 	- vérification de doublon
 		$bdd = new PDO('mysql:host=localhost;dbname=bitly;charset=utf8', 'root', '');
-		$req = $bdd->prepare('SELECT COUNT(*) AS nombre FROM links WHERE url = ?');
-		$req->execute([$url]);
+		// $req = $bdd->prepare('SELECT COUNT(*) AS nombre FROM links WHERE url = ?');
+		// $req->execute([$url]);
 
-		while($resultat = $req->fetch()) {
+		// while($resultat = $req->fetch()) {
 
-			if($resultat['nombre'] != 0 ) {
-				header('location: ./?error=true&message=Adresse déjà raccourcie');
-				exit();
-			}
+		// 	if($resultat['nombre'] != 0 ) {
+		// 		header('location: ./?error=true&message=Adresse déjà raccourcie');
+		// 		exit();
+		// 	}
 
-		}
+		// }
 
 		// * Etape 5 	- Ajout du raccourci
 
@@ -37,8 +68,6 @@
 
 		header("location: ./?short=$shortcut");
 		exit();
-
-
 
 	}
 
