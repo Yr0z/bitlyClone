@@ -6,7 +6,7 @@
 		$shortcut = htmlspecialchars($_GET['q']);
 
 		// Existe-t-il ?
-		$bdd = new PDO('mysql:host=localhost;dbname=bitly;charset=utf8', 'root', '');
+		require_once('src/connexion.php');
 		$requete = $bdd->prepare ('SELECT COUNT(*) AS nombre FROM links WHERE shortcut = ?');
 		$requete->execute([$shortcut]);
 
@@ -48,7 +48,7 @@
 		$shortcut = crypt($url, rand());
 
 		// * Etape 4 	- vérification de doublon
-		$bdd = new PDO('mysql:host=localhost;dbname=bitly;charset=utf8', 'root', '');
+		require_once('src/connexion.php');
 		// $req = $bdd->prepare('SELECT COUNT(*) AS nombre FROM links WHERE url = ?');
 		// $req->execute([$url]);
 
